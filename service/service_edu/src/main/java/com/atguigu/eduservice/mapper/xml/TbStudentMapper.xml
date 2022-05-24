@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.eduservice.mapper.TbStudentMapper">
+
+    <select id="studentAll" resultType="com.atguigu.eduservice.entity.vo.Student">
+        SELECT
+            sid,sname,age,birthday,proid,couid,address,gname,cname
+        FROM `tb_student` tst LEFT JOIN tb_grade tg
+        ON tst.gid=tg.gid LEFT JOIN tb_city tc ON tc.cid=tst.cityid
+        <where>
+            <if test="sname!=null and sname!=''">
+                and tst.sname like concat('%',#{sname},'%')
+            </if>
+            <if test="age!=null and age!=''">
+                and tst.age = #{age}
+            </if>
+        </where>
+    </select>
+</mapper>
